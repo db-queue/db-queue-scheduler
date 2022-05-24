@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.2.0](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/1) (24-05-2022)
+
 * The project was moved to bitbucket
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.1.1]() (09-02-2022)
 
 * Next execution time calculation was fixed. Large time difference between database and application or fast executions
