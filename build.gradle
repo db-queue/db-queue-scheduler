@@ -1,47 +1,21 @@
-import ru.yoomoney.gradle.plugins.backend.build.JavaExtension
-import ru.yoomoney.gradle.plugins.javapublishing.JavaArtifactPublishExtension
-
 buildscript {
     apply from: 'project.gradle', to: buildscript
 }
 
-apply plugin: "ru.yoomoney.gradle.plugins.library-project-plugin"
+apply plugin: 'yamoney-library-project-plugin'
 
-apply from: 'dependencies.gradle'
+groupIdSuffix = "common"
+artifactID = 'db-queue-scheduler'
 
-artifactId = 'db-queue-scheduler'
-
-
-def rootJavaExtension = project.extensions.getByType(JavaExtension.class)
-def rootJavaArtifactPublishExtension = project.extensions.getByType(JavaArtifactPublishExtension.class)
+dependencies {
+    api project(':db-queue-scheduler-core')
+    api project(':db-queue-scheduler-spring')
+}
 
 subprojects {
-    apply plugin: 'ru.yoomoney.gradle.plugins.java-plugin'
-    apply plugin: 'ru.yoomoney.gradle.plugins.java-artifact-publish-plugin'
+    apply plugin: 'yoomoney-module-project-plugin'
 
-    javaModule {
-        repositories = rootJavaExtension.repositories
-        snapshotsRepositories = rootJavaExtension.snapshotsRepositories
+    moduleProject {
+        publishArtifactEnabled = true
     }
-
-    javaArtifactPublishSettings {
-        artifactId = "${project.name}"
-        groupId = 'ru.yoomoney.tech'
-
-        nexusUser = rootJavaArtifactPublishExtension.nexusUser
-        nexusPassword = rootJavaArtifactPublishExtension.nexusPassword
-        snapshotRepository = rootJavaArtifactPublishExtension.snapshotRepository
-        releaseRepository = rootJavaArtifactPublishExtension.releaseRepository
-        signing = rootJavaArtifactPublishExtension.signing
-        staging = rootJavaArtifactPublishExtension.staging
-        publicationAdditionalInfo = rootJavaArtifactPublishExtension.publicationAdditionalInfo
-    }
-
-    test {
-        useJUnitPlatform()
-        enabled = true
-    }
-
-    rootProject.tasks.getByName('build').dependsOn(tasks.getByName('build'))
-    rootProject.tasks.getByName('publish').dependsOn(tasks.getByName('publish'))
 }
