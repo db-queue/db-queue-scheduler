@@ -1,7 +1,3 @@
-[![Build Status](https://travis-ci.com/yoomoney/db-queue-scheduler.svg?branch=master)](https://travis-ci.com/github/yoomoney/db-queue-scheduler/branches)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Download](https://img.shields.io/badge/Download-latest)](https://search.maven.org/artifact/ru.yoomoney.tech/db-queue-scheduler)
-
 # Database Scheduler
 
 Library provides periodic task executions on top of [db-queue](https://github.com/yoomoney/db-queue) library.

@@ -1,4 +1,0 @@
-dependencies {
-    api project(':db-queue-scheduler-core')
-    api project(':db-queue-scheduler-spring')
-}
