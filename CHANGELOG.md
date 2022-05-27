@@ -1,7 +1,7 @@
-### NEXT_VERSION_TYPE=MINOR
-### NEXT_VERSION_DESCRIPTION_BEGIN
+## [3.3.0](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/2) (27-05-2022)
+
 * Перевод на новый gradle: 6.4.1 -> 7.4.1
-### NEXT_VERSION_DESCRIPTION_END
+
 ## [3.2.0](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/1) (24-05-2022)
 
 * The project was moved to bitbucket
