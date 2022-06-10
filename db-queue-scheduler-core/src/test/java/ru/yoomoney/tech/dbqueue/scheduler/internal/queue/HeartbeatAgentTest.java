@@ -31,6 +31,7 @@ class HeartbeatAgentTest {
         heartbeatAgent.start();
         Thread.sleep(500L);
         heartbeatAgent.stop();
+        heartbeatAgent.awaitTermination(Duration.ofSeconds(5L));
 
         assertThat(counter.get(), greaterThanOrEqualTo(4));
         assertThat(counter.get(), lessThanOrEqualTo(6));
@@ -45,8 +46,34 @@ class HeartbeatAgentTest {
         heartbeatAgent.start();
         Thread.sleep(100L);
         heartbeatAgent.stop();
+        heartbeatAgent.awaitTermination(Duration.ofSeconds(5L));
 
-        Thread.sleep(100L);
         assertThat(threadRef.get().isAlive(), equalTo(false));
+    }
+
+    @Test
+    void should_await_for_termination_and_return_true() throws InterruptedException {
+        AtomicReference<Thread> threadRef = new AtomicReference<>();
+        HeartbeatAgent heartbeatAgent = new HeartbeatAgent("name", Duration.ofMinutes(10L), () ->
+                threadRef.set(Thread.currentThread()));
+
+        heartbeatAgent.start();
+        Thread.sleep(100L);
+        heartbeatAgent.stop();
+
+        assertThat(heartbeatAgent.awaitTermination(Duration.ofSeconds(5L)), equalTo(true));
+        assertThat(threadRef.get().isAlive(), equalTo(false));
+    }
+
+    @Test
+    void should_return_false_if_await_termination_timeout_occurs() throws InterruptedException {
+        HeartbeatAgent heartbeatAgent = new HeartbeatAgent("name", Duration.ofMinutes(10L), () ->{});
+
+        try {
+            heartbeatAgent.start();
+            assertThat(heartbeatAgent.awaitTermination(Duration.ofSeconds(1L)), equalTo(false));
+        } finally {
+            heartbeatAgent.stop();
+        }
     }
 }

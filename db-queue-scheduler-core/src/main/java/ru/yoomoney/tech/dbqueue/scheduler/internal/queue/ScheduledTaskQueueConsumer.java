@@ -35,6 +35,7 @@ class ScheduledTaskQueueConsumer implements QueueConsumer<String> {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTaskQueueConsumer.class);
 
     private static final Duration MIN_HEARTBEAT_INTERVAL = Duration.ofSeconds(10L);
+    private static final Duration HEARTBEAT_TERMINATION_TIMEOUT = Duration.ofSeconds(10L);
 
     private final QueueConfig queueConfig;
     private final ScheduledTaskDefinition scheduledTaskDefinition;
@@ -115,6 +116,10 @@ class ScheduledTaskQueueConsumer implements QueueConsumer<String> {
             return ScheduledTaskExecutionResult.error();
         } finally {
             heartbeatAgent.stop();
+            if (!heartbeatAgent.awaitTermination(HEARTBEAT_TERMINATION_TIMEOUT)) {
+                log.warn("heartbeat agent termination interrupted. timeout occurred: scheduledTaskIdentity={}",
+                        scheduledTaskDefinition.getIdentity());
+            }
         }
     }
 
