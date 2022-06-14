@@ -5,7 +5,7 @@ buildscript {
 javaArtifactPublishSettings.artifactId = 'db-queue-scheduler-example-spring'
 
 dependencies {
-    api project(':db-queue-scheduler-spring')
+    api project(':spring')
 
     implementation 'org.springframework.boot:spring-boot-starter-web:2.4.12',
             'org.springframework.boot:spring-boot-starter-jdbc:2.4.12',

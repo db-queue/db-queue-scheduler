@@ -8,8 +8,8 @@ groupIdSuffix = "common"
 artifactID = 'db-queue-scheduler'
 
 dependencies {
-    api project(':db-queue-scheduler-core')
-    api project(':db-queue-scheduler-spring')
+    api project(':core')
+    api project(':spring')
 }
 
 subprojects {

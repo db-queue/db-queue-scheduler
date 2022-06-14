@@ -2,3 +2,8 @@ include 'db-queue-scheduler-core',
         'db-queue-scheduler-spring',
         'db-queue-scheduler-brave',
         'examples:spring'
+
+project(':db-queue-scheduler-core').name = 'core'
+project(':db-queue-scheduler-spring').name = 'spring'
+project(':db-queue-scheduler-brave').name = 'brave'
+project(':examples:spring').name = 'examples-spring'
