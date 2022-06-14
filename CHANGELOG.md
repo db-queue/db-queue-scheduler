@@ -1,8 +1,8 @@
-### NEXT_VERSION_TYPE=PATCH
-### NEXT_VERSION_DESCRIPTION_BEGIN
-* Race-condition was fixed. Scheduled task executor did not wait for `HeartbeatAgent` termination which might have led 
-  to wrong next execution time calculation.
-### NEXT_VERSION_DESCRIPTION_END
+## [3.3.1](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/3) (14-06-2022)
+
+* Race-condition was fixed. Scheduled task executor did not wait for `HeartbeatAgent` termination which might have led
+to wrong next execution time calculation.
+
 ## [3.3.0](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/2) (27-05-2022)
 
 * Перевод на новый gradle: 6.4.1 -> 7.4.1
