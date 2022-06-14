@@ -1,3 +1,6 @@
+### NEXT_VERSION_TYPE=MAJOR|MINOR|PATCH
+### NEXT_VERSION_DESCRIPTION_BEGIN
+### NEXT_VERSION_DESCRIPTION_END
 ## [3.3.1](https://bitbucket.yooteam.ru/projects/BACKEND-LIBRARIES/repos/db-queue-scheduler/pull-requests/3) (14-06-2022)
 
 * Race-condition was fixed. Scheduled task executor did not wait for `HeartbeatAgent` termination which might have led
