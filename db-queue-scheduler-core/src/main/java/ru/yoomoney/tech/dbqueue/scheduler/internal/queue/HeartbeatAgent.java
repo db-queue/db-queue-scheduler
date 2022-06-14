@@ -24,6 +24,7 @@ class HeartbeatAgent {
     private final Runnable heartbeatAction;
     private final Object mutex;
     private volatile boolean isTaskRunning;
+    private volatile boolean isTaskStopped;
 
     HeartbeatAgent(@Nonnull String name,
                    @Nonnull Duration heartbeatInterval,
@@ -44,9 +45,20 @@ class HeartbeatAgent {
         }
         isTaskRunning = true;
         // tasks are rarely executed
-        Thread thread = new Thread(this::doHeartbeats);
+        Thread thread = new Thread(this::run);
         thread.setName("heartbeat-agent-" + name);
         thread.start();
+    }
+
+    private void run() {
+        try {
+            doHeartbeats();
+        } finally {
+            synchronized (mutex) {
+                isTaskStopped = true;
+                mutex.notifyAll();
+            }
+        }
     }
 
     private void doHeartbeats() {
@@ -81,5 +93,33 @@ class HeartbeatAgent {
             isTaskRunning = false;
             mutex.notifyAll();
         }
+    }
+
+    /**
+     * Block until the heartbeat agent have been finished, or the timeout occurs,
+     * or the current thread is interrupted, whichever happens first.
+     *
+     * @param timeout the maximum time to wait
+     * @return true if this executor terminated and false if the timeout elapsed before termination
+     */
+    public boolean awaitTermination(@Nonnull Duration timeout) {
+        requireNonNull(timeout, "timeout");
+        try {
+            synchronized (mutex) {
+                long remainingMills = timeout.toMillis();
+                while (!isTaskStopped) {
+                    if (remainingMills <= 0L) {
+                        return false;
+                    }
+                    long start = System.currentTimeMillis();
+                    mutex.wait(remainingMills);
+                    remainingMills -= System.currentTimeMillis() - start;
+                }
+            }
+        } catch (InterruptedException ex) {
+            log.info("termination awaiting interrupted: name={}", name, ex);
+            Thread.currentThread().interrupt();
+        }
+        return true;
     }
 }

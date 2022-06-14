@@ -3,7 +3,7 @@ buildscript {
 }
 
 dependencies {
-    api project(':db-queue-scheduler-core'),
+    api project(':core'),
             'ru.yoomoney.tech:db-queue-spring:15.0.0'
 
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2',

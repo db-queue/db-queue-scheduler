@@ -3,7 +3,7 @@ buildscript {
 }
 
 dependencies {
-    api project(':db-queue-scheduler-core')
+    api project(':core')
 
     implementation 'io.zipkin.brave:brave:5.10.2'
 
